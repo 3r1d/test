@@ -5,7 +5,7 @@ Date: 20181104
 ## Overview
 
 In order to run a CWL workflow with Galaxy-CWL, some modifications must be made in
-Galaxy-CWL, Cwltool and CWL workflow files.
+Galaxy-CWL, Cwltool, CWL tools files and CWL workflow files.
 
 This document describes those modifications.
 
@@ -41,10 +41,10 @@ https://github.com/hmenager/workflow-is-galaxy-hall
 
 Main modifications are:
 
+* Preventing EDAM filetype checking in Cwltool.
+* Adding 'Directory' type support in Galaxy using tar file
 * Adding 'gx:interface' hints in CWL tools files
-* Preventing EDAM filetype checking
 * Replacing relative-path with absolute-path in 'run' attributes of CWL workflow files (tools links).
-* Adding Directory type support using tar file
 
 ### Detailed description
 
@@ -123,9 +123,9 @@ a1dd63a
 
 * Tools default values not set when running a workflow (must be set manually)
 * Tools need to be created in galaxy before importing and running a CWL workflow
-(if dynamic tools are created on-the-fly when importing the workflow, it should work. FIXME: this need further investigation)
+(this is strange as dynamic tools are created on-the-fly when importing the workflow. This need further investigation.)
 * Find alternative to replacing relative-path with absolute-path in CWL workflow files (CWL-pack ?)
-* Find alternative to adding Directory type support using tar file
+* Find alternative to adding Directory type support using tar file (as it prevents tar files from being used for another purpose in Galaxy)
 
 ## DEMO server
 
@@ -133,6 +133,6 @@ a1dd63a
 * Authentication login: democwl
 * Galaxy demo user: demo-g-cwl-is.test
 
-The DEMO server contains all the modifications described in this document and can successfully import and run the workflow below
+The DEMO server contains all the modifications described in this document and can successfully import and run the following workflow:
 
 https://github.com/hmenager/workflow-is-cwl/workflows/cmsearch-multimodel-wf.cwl
