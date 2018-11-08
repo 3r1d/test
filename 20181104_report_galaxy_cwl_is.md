@@ -98,9 +98,54 @@ TypeError: filter() got an unexpected keyword argument 'active'
 
 ##### Enable CWL workflow import with GUI
 
+To prevent exception below
+
+```
+raise exceptions.MessageException("The data content does not appear to be a valid workflow.")
+```
+
+used the hack below
+
+```
+  def __api_import_from_archive(self, trans, archive_data, source=None, from_path=None):
+      try:
+          data = json.loads(archive_data)
+      except ValueError:
+
+          # hack
+          # if not json, assume the file to be a cwl workflow
+          # FIXME: don't use fmt to determine if cwl or galaxy wf, as galaxy wf use yaml fmt as well (galaxy-wf-fmt-2)
+          if from_path is not None:
+              print('{}'.format("CWL-IS: assume CWL workflow"))
+              data = {"src": "from_path", "path": from_path}
+          else:
+              raise exceptions.MessageException("The data content does not appear to be a valid workflow.")
+  
+      ...
+```
+
 f2a4645
 
 ##### Rename "Test Dataset".
+
+To prevent error below when running CWL workflow 'test_simplest_wf' test
+
+```
+  File "/home/jra001k/snapshot/pasteur/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/pathmapper.py", line 46, in visit_class
+    op(rec)
+  File "/home/jra001k/snapshot/pasteur/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/command_line_tool.py", line 186, in check_adjust
+    raise WorkflowException("Invalid filename: '%s' contains illegal characters" % (f["basename"]))
+WorkflowException: Invalid filename: 'Test Dataset' contains illegal characters
+```
+
+replaced space with underscore ('Test Dataset' to 'Test_Dataset') in test/base/populators.py
+
+```
+def upload_payload(self, history_id, content=None, **kwds):
+    name = kwds.get("name", "Test_Dataset")
+
+    ...
+```
 
 7827974
 
