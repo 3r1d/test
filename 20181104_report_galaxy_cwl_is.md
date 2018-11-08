@@ -144,6 +144,5 @@ a1dd63a
 * Authentication login: democwl
 * Galaxy demo user: demo-g-cwl-is.test
 
-The DEMO server contains all the modifications described in this document and can successfully import and run the following workflow:
-
-https://github.com/hmenager/workflow-is-cwl/workflows/cmsearch-multimodel-wf.cwl
+The DEMO server contains all the modifications described in this document and
+can successfully import and run the following workflow: https://github.com/hmenager/workflow-is-cwl/workflows/cmsearch-multimodel-wf.cwl
