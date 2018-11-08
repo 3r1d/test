@@ -52,11 +52,51 @@ Main modifications are:
 
 #### Galaxy-CWL
 
-##### Enable CWL workflow execution through GUI
+##### Enable CWL workflow execution with GUI
+
+'_tools_by_hash' must be initialized at galaxy startup to prevent error below
+(which occurs when running a CWL workflow):
+
+```
+Traceback (most recent call last):
+  File "lib/galaxy/web/framework/decorators.py", line 285, in decorator
+    rval = func(self, trans, *args, **kwargs)
+  File "lib/galaxy/webapps/galaxy/api/workflows.py", line 417, in workflow_dict
+    ret_dict = self.workflow_contents_manager.workflow_to_dict(trans, stored_workflow, style=style)
+  File "lib/galaxy/managers/workflows.py", line 384, in workflow_to_dict
+    return self._workflow_to_dict_run(trans, stored)
+  File "lib/galaxy/managers/workflows.py", line 408, in _workflow_to_dict_run
+    module_injector.inject(step, steps=workflow.steps, exact_tools=False)
+  File "lib/galaxy/workflow/modules.py", line 1505, in inject
+    module = step.module = module_factory.from_workflow_step(self.trans, step, **kwargs)
+  File "lib/galaxy/workflow/modules.py", line 1382, in from_workflow_step
+    return self.module_types[type].from_workflow_step(trans, step, **kwargs)
+  File "lib/galaxy/workflow/modules.py", line 815, in from_workflow_step
+    module = super(ToolModule, Class).from_workflow_step(trans, step, tool_id=tool_id, tool_version=tool_version, tool_hash=tool_hash, **kwds)
+  File "lib/galaxy/workflow/modules.py", line 88, in from_workflow_step
+    module = Class(trans, **kwds)
+  File "lib/galaxy/workflow/modules.py", line 772, in __init__
+    self.tool = trans.app.toolbox.get_tool(tool_id, tool_version=tool_version, exact=exact_tools, tool_hash=tool_hash)
+  File "lib/galaxy/tools/toolbox/base.py", line 439, in get_tool
+    tool_id = self._tools_by_hash[tool_hash].id
+KeyError: u'e4de79296ec91ab9b8d8d9d71f94044a2561c01b9fc708e5197d432b453fa297'
+```
+
+'filter' has been replaced by 'filter_by' to prevent error below:
+
+```
+  File "lib/galaxy/workflow/modules.py", line 771, in __init__
+    trans.app.toolbox._init_dynamic_tools()
+  File "lib/galaxy/tools/toolbox/base.py", line 183, in _init_dynamic_tools
+    for dynamic_tool in self.app.dynamic_tool_manager.list_tools():
+  File "lib/galaxy/managers/tools.py", line 117, in list_tools
+    return self.query().filter(active=active)
+TypeError: filter() got an unexpected keyword argument 'active'
+```
 
 9e0d85b  
 
-##### Enable CWL workflow import through GUI
+##### Enable CWL workflow import with GUI
 
 f2a4645
 
