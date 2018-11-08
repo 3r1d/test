@@ -27,6 +27,12 @@ ELIXIR Workflow
 https://github.com/hmenager/workflow-is-cwl
 ```
 
+Project documentation
+
+```
+https://github.com/hmenager/workflow-is-galaxy-hall
+```
+
 ## Modifications
 
 ### Overview
@@ -35,30 +41,41 @@ Main modifications are:
 
 * Adding 'gx:interface' hints in CWL tools files
 * Prevent EDAM filetype checking
-* Replacing relative-path with absolute-path in  CWL workflow file (in 'run' attributes containing tools links)
+* Replacing relative-path with absolute-path in  CWL workflow files (in 'run' attributes containing tools links).
+  FIXME: fix this with CWL-pack ?
 * Adding Directory type support using tar file
 
 ### Detailed description
 
 #### Galaxy-CWL
 
-```
-9e0d85b  Initialize '_tools_by_hash' at galaxy startup.
-f2a4645  Add support for cwl workflow import (yaml fmt).
-7827974  Rename "Test Dataset".
-ad2f92b  Prevent flooding Galaxy left panel with tools description and label.
-22cc09f  Map tar file to 'Directory' type.
-64f6b95  Add missing mapping between Galaxy type and CWL type.
-2e55c1c  Fix 'ValidationException' which occurs when optional file is unset.
-dbb5520  Remove duplicate.
-51b7031  Set beta_relaxed_fmt_check to true. Add workflow-is-cwl conf entries.
-2956b44  Add 'beta_relaxed_fmt_check' to prevent file fmt check.
-45e806f  Disable use of cwltool specific version.
-6be9cf0  Disable 'md5sum_non_strict.cwl' CWL test.
-8acd18c  Disable pre v1.0 CWL tests.
-1657c6d  Prevent call to get_size() when dataset is None.
-2d2ec56  Prevent call to get_size() when dataset is None.
-```
+##### Enable CWL workflow execution through GUI
+9e0d85b  
+
+##### Enable CWL workflow import through GUI
+f2a4645
+
+##### Rename "Test Dataset".
+7827974
+
+##### Prevent flooding Galaxy left panel with tools description and label.
+ad2f92b  
+
+##### Map tar file to 'Directory' type.
+22cc09f  
+
+##### Add missing mapping between Galaxy type and CWL type.
+64f6b95  
+
+##### Fix 'ValidationException' which occurs when optional file is unset.
+2e55c1c  
+
+##### Add 'beta_relaxed_fmt_check' to prevent file fmt check.
+2956b44  
+
+##### Prevent call to get_size() when dataset is None.
+1657c6d 
+2d2ec56  
 
 #### Cwltool
 
@@ -91,3 +108,13 @@ a1dd63a  Add 'gx:interface' hints in HMMER cwl file.
 dc013b6  Add Diamond expected output.
 ```
 
+## Problems that remain
+
+* FIXME: Tools default values not set when running a workflow (in cwltool, it is the case).
+* FIXME: Tools need to be created in galaxy before importing and running a CWL workflow (may a side effect as this should be handled on-the-fly with dynamic tools)
+
+## DEMO server
+
+* Url: http://sd-104052.dedibox.fr:8083
+* Authentication login: democwl
+* Galaxy demo user: demo-g-cwl-is.test
