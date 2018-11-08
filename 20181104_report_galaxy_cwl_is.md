@@ -43,7 +43,7 @@ Main modifications are:
 
 * Adding 'gx:interface' hints in CWL tools files
 * Preventing EDAM filetype checking
-* Replacing relative-path with absolute-path in 'run' attributes containing tools links (in CWL workflow files).
+* Replacing relative-path with absolute-path in 'run' attributes of CWL workflow files (tools links).
 * Adding Directory type support using tar file
 
 ### Detailed description
@@ -111,9 +111,11 @@ dc013b6  Add Diamond expected output.
 
 ## Problems that remain
 
-* FIXME: Tools default values not set when running a workflow (in cwltool, it is the case).
-* FIXME: Tools need to be created in galaxy before importing and running a CWL workflow (may a side effect as this should be handled on-the-fly with dynamic tools)
+* Tools default values not set when running a workflow (must be set manually)
+* Tools need to be created in galaxy before importing and running a CWL workflow
+(if dynamic tools are created on-the-fly when importing the workflow, it should work. FIXME: this need further investigation)
 * Find alternative to replacing relative-path with absolute-path in CWL workflow files (CWL-pack ?)
+* Find alternative to adding Directory type support using tar file
 
 ## DEMO server
 
