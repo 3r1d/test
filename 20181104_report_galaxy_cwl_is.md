@@ -35,16 +35,18 @@ Project documentation
 https://github.com/hmenager/workflow-is-galaxy-hall
 ```
 
-## Modifications
+## Modifications description
 
 ### Overview
 
 Main modifications are:
 
-* Preventing EDAM filetype checking in Cwltool.
-* Adding 'Directory' type support in Galaxy using tar file
-* Adding 'gx:interface' hints in CWL tools files
-* Replacing relative-path with absolute-path in 'run' attributes of CWL workflow files (tools links).
+* Prevent EDAM filetype checking in Cwltool
+* Add 'Directory' type support in Galaxy (using tar file)
+* Add 'gx:interface' hints in CWL tools files
+* Replace relative-path with absolute-path in 'run' attributes of CWL workflow files (tools links).
+* Call '_init_dynamic_tools' method at Galaxy startup to populate '_tools_by_hash' variable.
+* Assume yaml CWL workflow if exception occurs during json deserialization (when user click on 'import')
 
 ### Detailed description
 
@@ -126,6 +128,15 @@ a1dd63a
 (this is strange as dynamic tools are created on-the-fly when importing the workflow. This need further investigation.)
 * Find alternative to replacing relative-path with absolute-path in CWL workflow files (CWL-pack ?)
 * Find alternative to adding Directory type support using tar file (as it prevents tar files from being used for another purpose in Galaxy)
+* At Galaxy startup, tools are loaded twice in order to populate '_tools_by_hash' variable.
+* After the workflow run, the browser sends requests to Galaxy server without interruption (every second).
+* Workflow import take a long time (maybe caused by the creation of each
+  dynamic tools on-the-fly). Maybe a progress bar is needed to inform the user
+  that the import process is running.
+* Find alternative to assuming CWL workflow if exception occurs during json
+  deserialization (when user click on 'import'). This is problematic as Galaxy
+  native workflow may use yaml too in the future.
+
 
 ## DEMO server
 
